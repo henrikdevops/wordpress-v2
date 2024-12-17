@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
 
-USER 1000
+#USER 1000 Make sure to set UID when deploy!
 
 RUN mkdir -p /var/www/html/wordpress
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
