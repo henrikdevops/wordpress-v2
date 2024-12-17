@@ -1,5 +1,4 @@
 FROM ubuntu:20.04
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
@@ -11,9 +10,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 USER 1000
-
 RUN mkdir -p /var/www/html/wordpress
-
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
 
 RUN chown -R www-data:www-data /var/www/html/wordpress && chmod -R 755 /var/www/html/wordpress
