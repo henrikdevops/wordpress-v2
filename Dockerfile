@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
 
 #USER 1000
 
->>>>>>> cbd2932 (deleted USER 1000)
 RUN mkdir -p /var/www/html/wordpress
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
 
