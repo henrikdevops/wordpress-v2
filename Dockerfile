@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
 
-USER 1000
+#USER 1000
 
 RUN mkdir -p /var/www/html/wordpress
 
