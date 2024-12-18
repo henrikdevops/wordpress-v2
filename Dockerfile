@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
 
 #USER 1000 Make sure to set UID when deploy!
 
+#I dont know why i cant set USER 1000 before creating containerfile
+
 RUN mkdir -p /var/www/html/wordpress
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
 
