@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
 
+
+RUN sed -i 's/80/8080/' /etc/apache2/ports.conf && \
+    sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
+
 #USER 1000
 
 #oc adm policy add-scc-to-user anyuid -z default -n henrikdevops
@@ -30,4 +34,3 @@ RUN a2enmod rewrite
 EXPOSE 8080
 WORKDIR /var/www/html/wordpress
 CMD ["apachectl", "-D", "FOREGROUND"]
-RUN touch text.txt
