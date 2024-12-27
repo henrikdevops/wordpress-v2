@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 
 #USER 1000
 
-# TEST !
+RUN touch text.txt
 
 RUN mkdir -p /var/www/html/wordpress
 
