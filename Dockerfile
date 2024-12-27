@@ -12,8 +12,6 @@ RUN apt-get update && apt-get install -y \
 
 #USER 1000
 
-RUN touch text.txt
-
 RUN mkdir -p /var/www/html/wordpress
 
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
@@ -25,7 +23,9 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     echo "AllowOverride All" >> /etc/apache2/apache2.conf && \
     echo "</Directory>" >> /etc/apache2/apache2.conf
 
+
 RUN a2enmod rewrite
 EXPOSE 8080
 WORKDIR /var/www/html/wordpress
 CMD ["apachectl", "-D", "FOREGROUND"]
+RUN touch text.txt
