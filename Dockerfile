@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     php-mysql \
     wget \
     unzip \
+    htop \
+    procps \
     && apt-get clean
 
 #USER 1000
