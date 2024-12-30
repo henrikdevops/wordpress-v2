@@ -10,9 +10,12 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
 
+USER root
 
+RUN useradd -ms /bin/bash appuser
+USER appuser
 
-#RUN sed -i 's/80/8080/' /etc/apache2/ports.conf && \
+RUN sed -i 's/Listen 80/Listen 8080/' /usr/local/apache2/conf/httpd.conf
     #sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf && \
     #sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/wordpress|' /etc/apache2/sites-available/000-default.conf
 
@@ -29,6 +32,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
 
 
 RUN a2enmod rewrite
+
 EXPOSE 8080
 WORKDIR /var/www/html/wordpress
-CMD ["apachectl", "-D", "FOREGROUND"]
+CMD ["apachectl", "-D", "httpd-foreground"]
