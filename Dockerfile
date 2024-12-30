@@ -24,7 +24,6 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
     unzip /tmp/wordpress.zip -d /var/www/html && \
     rm /tmp/wordpress.zip
 
-RUN mkdir /var/log/apache2/error.log
 
 # Set proper permissions for WordPress
 RUN chown -R www-data:www-data /var/www/html/wordpress && \
@@ -46,5 +45,5 @@ EXPOSE 8080
 WORKDIR /var/www/html/wordpress
 
 # Start Apache in the foreground
-CMD ["apachectl", "-D", "FOREGROUND", "-f", "/etc/apache2/apache2.conf"]
-
+#CMD ["apachectl", "-D", "FOREGROUND", "-f", "/etc/apache2/apache2.conf"]
+CMD ["apachectl", "-D", "-S", "0.0.0.0:8080", "-t", "/var/www/html/wordpress/"]
