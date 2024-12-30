@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 # Switch to root user (already default)
 USER root
 
-RUN oc adm policy add-scc-to-user anyuid -z default -n henrikdevops
+#RUN oc adm policy add-scc-to-user anyuid -z default -n henrikdevops
 
 # Update Apache to use port 8080
 RUN sed -i 's/80/8080/' /etc/apache2/ports.conf && \
