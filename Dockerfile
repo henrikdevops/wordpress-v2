@@ -1,51 +1,44 @@
-FROM ubuntu:20.04
+# Docker image with redhat ubi 9, PHP install and wordpress 6.7.1
+FROM docker.io/redhat/ubi9:latest
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install required packages
-RUN apt-get update && apt-get install -y \
-    apache2 \
-    php \
-    php-mysql \
-    wget \
-    unzip \
-    && apt-get clean
-
-# Switch to root user (already default)
-USER root
-
-#RUN oc adm policy add-scc-to-user anyuid -z default -n henrikdevops
-
-# Update Apache to use port 8080
-RUN sed -i 's/80/8080/' /etc/apache2/ports.conf && \
-    sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf && \
-    mkdir -p /var/www/html/wordpress
-
-# Download and extract WordPress
-RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
-    unzip /tmp/wordpress.zip -d /var/www/html && \
-    rm /tmp/wordpress.zip
+# installation php
+ENV WORDPRESS_VERSION=6.7.1
+# PHP installation
+RUN yum install -y \
+        httpd \
+        php \
+        php-mysqlnd \
+        php-json \
+        php-curl \
+        php-gd \
+        php-mbstring \
+        php-xml \
+        php-opcache \
+        wget \
+        tar \
+        unzip \
+    && yum clean all
 
 
-# Set proper permissions for WordPress
-RUN chown -R www-data:www-data /var/www/html/wordpress && \
-    chmod -R 755 /var/www/html/wordpress
+# dwnl, unpack & inst WordPress
+RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
 
-# Configure Apache for WordPress
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-    echo "<Directory /var/www/html/wordpress>" >> /etc/apache2/apache2.conf && \
-    echo "    AllowOverride All" >> /etc/apache2/apache2.conf && \
-    echo "</Directory>" >> /etc/apache2/apache2.conf
+# Rights for WordPress
+RUN chown -R apache:apache /var/www/html \
+    && chmod -R 755 /var/www/html
 
-# Enable Apache rewrite module
-RUN a2enmod rewrite
+# Cat for wordpress
+WORKDIR /var/www/html/wordpress/
 
-# Expose port 8080
+
+#Change config for APACHE to port8080 with sed 
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
+
+
+
+# port exp 8080  pod
 EXPOSE 8080
 
-# Set working directory
-WORKDIR /var/www/html/wordpress
-
-# Start Apache in the foreground
-#CMD ["apachectl", "-D", "FOREGROUND", "-f", "/etc/apache2/apache2.conf"]
-CMD ["apachectl", "-D", "0.0.0.0:8080", "-t", "/var/www/html/wordpress/"]
+# Start php w port 8080 from /wordpress
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html/wordpress/"]
+#CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
