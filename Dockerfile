@@ -24,6 +24,8 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
     unzip /tmp/wordpress.zip -d /var/www/html && \
     rm /tmp/wordpress.zip
 
+RUN mkdir /var/log/apache2/error.log
+
 # Set proper permissions for WordPress
 RUN chown -R www-data:www-data /var/www/html/wordpress && \
     chmod -R 755 /var/www/html/wordpress
