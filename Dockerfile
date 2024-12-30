@@ -44,5 +44,5 @@ EXPOSE 8080
 WORKDIR /var/www/html/wordpress
 
 # Start Apache in the foreground
-CMD ["apachectl", "-D", "FOREGROUND", "-f", "/etc/apache2.conf"]
+CMD ["apachectl", "-D", "FOREGROUND", "-f", "/etc/apache2/apache2.conf"]
 
