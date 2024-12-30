@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
 # Switch to root user (already default)
 USER root
 
+RUN oc adm policy add-scc-to-user anyuid -z default -n henrikdevops
+
 # Update Apache to use port 8080
 RUN sed -i 's/80/8080/' /etc/apache2/ports.conf && \
     sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf && \
@@ -46,4 +48,4 @@ WORKDIR /var/www/html/wordpress
 
 # Start Apache in the foreground
 #CMD ["apachectl", "-D", "FOREGROUND", "-f", "/etc/apache2/apache2.conf"]
-CMD ["apachectl", "-D", "-S", "0.0.0.0:8080", "-t", "/var/www/html/wordpress/"]
+CMD ["apachectl", "-D", "0.0.0.0:8080", "-t", "/var/www/html/wordpress/"]
