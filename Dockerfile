@@ -30,7 +30,6 @@ RUN chown -R apache:apache /var/www/html \
 # Cat for wordpress
 WORKDIR /var/www/html/wordpress/
 
-####
 
 #Change config for APACHE to port8080 with sed 
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
