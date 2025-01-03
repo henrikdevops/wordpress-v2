@@ -34,8 +34,6 @@ WORKDIR /var/www/html/wordpress/
 #Change config for APACHE to port8080 with sed 
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
 
-### THIS IS A TEST ###
-
 
 # port exp 8080  pod
 EXPOSE 8080
