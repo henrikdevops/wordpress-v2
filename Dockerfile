@@ -20,6 +20,12 @@ RUN yum install -y \
     && yum clean all
 
 
+## TES
+
+## TESTT
+
+
+
 # dwnl, unpack & inst WordPress
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && unzip /tmp/wordpress.zip -d /var/www/html && rm /tmp/wordpress.zip
 
